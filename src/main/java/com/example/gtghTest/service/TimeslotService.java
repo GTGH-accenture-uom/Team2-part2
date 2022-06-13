@@ -11,19 +11,27 @@ import java.util.List;
 @Service
 public class TimeslotService {
 
-    private List<Timeslot> timeslots = new ArrayList<>(); // The list of all Timeslot people
+    private List<Timeslot> timeslots = new ArrayList<>(); // The list of all Timeslots
 
     public void createTimeslot(Timeslot timeslot) { // Adds a single Timeslot on the list
         timeslots.add(timeslot);
     }
 
     public Timeslot getTimeslot(String date){ // Gets a single Timeslot from the list
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(date, formatter);
 
+        Timeslot newTimeslot = new Timeslot(dateTime.getDayOfMonth(),
+                                            dateTime.getMonthValue(),
+                                            dateTime.getYear(),
+                                            dateTime.getHour(),
+                                            dateTime.getMinute(),
+                                            dateTime.getMinute(),
+                                            dateTime.getMinute()+15,
+                                            null);
+
         for (Timeslot timeslot: timeslots){
-            if(timeslot.getLocalDateTime().equals(dateTime)){
+            if(timeslot.equals(newTimeslot)){
                 return timeslot;
             }
         }

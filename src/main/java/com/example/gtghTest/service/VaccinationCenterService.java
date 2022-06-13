@@ -40,11 +40,8 @@ public class VaccinationCenterService {
     public void addTimeslotToVacCenter(String code, String localDateTime) {
         Timeslot t = null;
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime dateTime = LocalDateTime.parse(localDateTime, formatter);
-
         for(Timeslot timeslot: timeslotService.getEveryTimeslot()){
-            if(timeslot.getLocalDateTime().equals(dateTime)){
+            if(timeslot.equals(timeslotService.getTimeslot(localDateTime))){
                 t = timeslot;
             }
         }

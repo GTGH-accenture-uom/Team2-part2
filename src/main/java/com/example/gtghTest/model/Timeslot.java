@@ -88,16 +88,4 @@ public class Timeslot {
     public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
     }
-
-    public LocalDateTime getLocalDateTime() {
-        return LocalDateTime.of(this.year, this.month, this.day, this.hour, this.minutes);
-    }
-
-    public void setLocalDateTime(LocalDateTime date) {
-        this.day = date.getDayOfMonth();
-        this.month = date.getMonthValue();
-        this.year = date.getYear();
-        this.hour = date.getHour();
-        this.minutes = date.getMinute();
-    }
 }
