@@ -7,7 +7,7 @@ public class Doctor {
     private String amka;
     private String name;
     private String surname;
-    private List<Timeslot> timeslots = new ArrayList<>();
+    private List<Timeslot> timeslots;
 
     public Doctor(String amka, String name, String surname, List<Timeslot> timeslots) {
         this.amka = amka;
@@ -49,7 +49,9 @@ public class Doctor {
     }
 
     public void assignTimeslot(Timeslot timeslot){
-        if(timeslots.size()<5) timeslots.add(timeslot);
+        if(timeslots.size()<5){
+            timeslots.add(timeslot);
+        }
         else System.out.println("The doctor has already reached the max capacity of assigned timeslots!");
     }
 }

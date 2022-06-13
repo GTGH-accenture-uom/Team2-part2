@@ -23,11 +23,10 @@ public class DoctorController {
     }
 
     @PostMapping(path = "/doctor/assign-timeslot")
-    public String assignTimeslotToDoctor(@RequestParam(value = "amka") String amka,
-                                      @RequestParam(value = "date") String date)
+    public String assignTimeslotToDoctor(@RequestParam(value = "amka") String amka)
     {
-        doctorService.assignTimeslotToDoctor(amka, date);
-        return "done!";
+        doctorService.assignTimeslotsToDoctor(amka);
+        return "Timeslot assigned to the doctor";
     }
 
 }
