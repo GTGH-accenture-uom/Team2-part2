@@ -14,7 +14,7 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
-    @PostMapping(path = "/reservation") // Posts a single Insured
+    @PostMapping(path = "/reservation") // Posts a single Reservation
     public String addReservation(@RequestBody Reservation reservation){
         reservationService.reserveAnAppointment(reservation);
         return "Reservation created!";

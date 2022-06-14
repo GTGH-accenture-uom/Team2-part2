@@ -11,7 +11,8 @@ public class ReservationService {
 
     private List<Reservation> reservations = new ArrayList<>();
 
-    public List<Reservation> getEveryAppointment(){ // Gets every Insured person on the list
+    //TODO: add/change a method to show the insured requested
+    public List<Reservation> getEveryAppointment(){ // Gets every appointment on the list
         return reservations;
     }
 

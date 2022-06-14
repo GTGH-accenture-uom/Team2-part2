@@ -36,5 +36,7 @@ public class VaccinationCenterController {
     }
 
     @GetMapping(path = "/vaccination-center/all-timeslots")
-    public List<Timeslot> timeslots(){return vaccinationCenterService.getAllTimeslots();}
+    public List<Timeslot> getAllFreeTimeslots(@RequestParam (value = "code") String code){
+        return vaccinationCenterService.getAllTimeslots(code);
+    }
 }

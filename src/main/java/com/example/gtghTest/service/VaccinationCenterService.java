@@ -2,7 +2,6 @@ package com.example.gtghTest.service;
 
 import com.example.gtghTest.model.Doctor;
 import com.example.gtghTest.model.Timeslot;
-import com.example.gtghTest.model.Vaccination;
 import com.example.gtghTest.model.VaccinationCenter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +14,9 @@ public class VaccinationCenterService {
 
     @Autowired
     private TimeslotService timeslotService;
+
+    @Autowired
+    private ReservationService reservationService; //TODO: add an individual reservation check for each center
 
     private List<VaccinationCenter> vaccinationCenters = new ArrayList<>();
     private List<Doctor> doctors = new ArrayList<>();
@@ -99,12 +101,7 @@ public class VaccinationCenterService {
         }
     }
 
-    public List<Timeslot> getAllTimeslots() {
-        List<Timeslot> theList = new ArrayList<>();
-
-        for (VaccinationCenter vaccinationCenter : vaccinationCenters) {
-            theList.addAll(vaccinationCenter.getTimeslots());
-        }
-        return theList;
+    public List<Timeslot> getAllTimeslots(String code) { // Shows the free timeslots of the center whose code we insert as a value
+        return getVaccinationCenterByCode(code).getTimeslots();
     }
 }
