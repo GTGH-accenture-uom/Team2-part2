@@ -25,7 +25,7 @@ public class InsuredController {
         return "Insured list successfully imported!";
     }
 
-    @GetMapping(path = "/insured") // Gets a specific Insured by their name
+    @GetMapping(path = "/insured-by-name") // Gets a specific Insured by their name
     public Insured getSpecificInsuredByName(@RequestParam(value = "name") String name){
         return insuredService.getInsuredByName(name);
     }

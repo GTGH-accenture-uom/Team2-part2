@@ -17,9 +17,6 @@ public class VaccinationCenterService {
     @Autowired
     private TimeslotService timeslotService;
 
-    @Autowired
-    private ReservationService reservationService; //TODO: add an individual reservation check for each center
-
     private List<VaccinationCenter> vaccinationCenters = new ArrayList<>();
     private HashMap<Doctor,VaccinationCenter> assignedDoctors = new HashMap<>();
 
