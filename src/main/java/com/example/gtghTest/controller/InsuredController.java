@@ -27,7 +27,12 @@ public class InsuredController {
 
     @GetMapping(path = "/insured") // Gets a specific Insured by their name
     public Insured getSpecificInsuredByName(@RequestParam(value = "name") String name){
-        return insuredService.getInsured(name);
+        return insuredService.getInsuredByName(name);
+    }
+
+    @GetMapping(path = "/insured") // Gets a specific Insured by their name
+    public Insured getSpecificInsuredByAmka(@RequestParam(value = "amka") String amka){
+        return insuredService.getInsuredByAmka(amka);
     }
 
     @GetMapping(path = "/insured/all") // Gets every Insured that's on the list

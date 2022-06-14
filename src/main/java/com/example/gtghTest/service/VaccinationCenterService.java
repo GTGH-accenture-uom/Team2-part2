@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class VaccinationCenterService {
@@ -19,7 +21,7 @@ public class VaccinationCenterService {
     private ReservationService reservationService; //TODO: add an individual reservation check for each center
 
     private List<VaccinationCenter> vaccinationCenters = new ArrayList<>();
-    private List<Doctor> doctors = new ArrayList<>();
+    private HashMap<Doctor,VaccinationCenter> assignedDoctors = new HashMap<>();
 
     public void addVaccinationCenter(VaccinationCenter vaccinationCenter) {
         vaccinationCenter.getTimeslots().clear(); // Empties the timeslot list first
@@ -55,21 +57,22 @@ public class VaccinationCenterService {
         }
     }
 
-    public boolean assignDoctorToCenter(Doctor doctor) {
-        if (!doctors.isEmpty()) {
-            for (Doctor doc : doctors) {
-                if (doctors.size() < 2 && !(doc.equals(doctor))) {
-                    doctors.add(doctor);
+    public boolean assignDoctorToCenter(Doctor doctor, VaccinationCenter vacCenter) {
+        if (!assignedDoctors.isEmpty()) {
+            for(Map.Entry<Doctor, VaccinationCenter> set : assignedDoctors.entrySet()) {
+                if (assignedDoctors.size()<4 && !(set.getKey().equals(doctor))) {
+                    assignedDoctors.put(doctor,vacCenter);
                     return true;
-                } else if (doctors.size() < 2 && doc.equals(doctor)) {
-                    System.out.println("This doctor is already assigned to this center");
+                } else if (assignedDoctors.size()<4 && set.getKey().equals(doctor)) {
+                    if(set.getValue().equals(vacCenter)) System.out.println("This doctor is already assigned to this center");
+                    else System.out.println("This doctor is already assigned to another center");
                     return true;
                 } else
-                    System.out.println("There are too many doctors already assigned to this center");
+                    System.out.println("All the vaccination centers are full");
                 return false;
             }
         } else {
-            doctors.add(doctor);
+            assignedDoctors.put(doctor, vacCenter);
             return true;
         }
         return false;
@@ -104,4 +107,21 @@ public class VaccinationCenterService {
     public List<Timeslot> getAllTimeslots(String code) { // Shows the free timeslots of the center whose code we insert as a value
         return getVaccinationCenterByCode(code).getTimeslots();
     } //TODO 2: THIS ONE (print in console, and save in a file named vaccination-results.txt)
+
+    public String search4Timeslot(String year, String month, String day) {
+
+        for (VaccinationCenter vacCenter : getAllCenters()){
+            for (Timeslot t : vacCenter.getTimeslots()){
+                if(t.getYear()==Integer.getInteger(year) && t.getMonth()==Integer.getInteger(month) && t.getDay()==Integer.getInteger(day)){
+                    System.out.println("Timeslots found"); // TODO A: NICE TO HAVE (OPTIONAL)
+                    return "Available timeslots found.";
+                }
+            }
+        }
+        System.out.println("No timeslots found");
+        return "No available slots found on this date.";
+    }
+
+    public HashMap<Doctor, VaccinationCenter> getAssignedDoctors(){return assignedDoctors;}
+
 }

@@ -7,12 +7,12 @@ public class VaccinationCenter {
 
     private String code;
     private String address;
-    private List<Timeslot> timeslots;
+    private List<Timeslot> unassignedTimeslots;
 
     public VaccinationCenter(String code, String address, List<Timeslot> timeslots) {
         this.code = code;
         this.address = address;
-        this.timeslots = timeslots;
+        this.unassignedTimeslots = timeslots;
     }
 
     public String getCode() {
@@ -32,11 +32,11 @@ public class VaccinationCenter {
     }
 
     public List<Timeslot> getTimeslots() {
-        return timeslots;
+        return unassignedTimeslots;
     }
 
     public void setTimeslots(List<Timeslot> timeslots) {
-        this.timeslots = timeslots;
+        this.unassignedTimeslots = timeslots;
     }
 
 }

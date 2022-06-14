@@ -1,7 +1,10 @@
 package com.example.gtghTest.controller;
 
 
+import com.example.gtghTest.model.Doctor;
+import com.example.gtghTest.model.Insured;
 import com.example.gtghTest.model.Reservation;
+import com.example.gtghTest.model.Timeslot;
 import com.example.gtghTest.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,4 +30,20 @@ public class ReservationController {
         return reservationService.getEveryAppointment();
     }
 
+    @GetMapping(path = "/get-insured-old-people-with-no-reservation")
+    public List<Insured> getOldPeopleList(){ return reservationService.returnSpecificNumberOfInsured();}
+
+    @PostMapping(path = "/create-appointment")
+    public String makeAppointment(@RequestParam (value = "amka") String amka,
+                                  @RequestBody Timeslot timeslot){
+
+        return reservationService.makeAppointment(amka, timeslot);
+    }
+
+    @PostMapping(path = "/update-appointment")
+    public String changeAppointment(@RequestParam (value = "amka") String amka,
+                                    @RequestBody Timeslot timeslot){
+        int i = 0;
+        return reservationService.changeAppointment(amka,timeslot,i);
+    }
 }

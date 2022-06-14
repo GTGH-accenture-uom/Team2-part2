@@ -39,4 +39,12 @@ public class VaccinationCenterController {
     public List<Timeslot> getAllFreeTimeslots(@RequestParam (value = "code") String code){
         return vaccinationCenterService.getAllTimeslots(code);
     }
+
+    @PostMapping(path = "/search-for-free-timeslot")
+    public String search4Timeslot(@RequestParam(value = "day") String day,
+                                  @RequestParam(value = "month") String month,
+                                  @RequestParam(value = "year") String year){
+
+        return vaccinationCenterService.search4Timeslot(year,month,day);
+    }
 }

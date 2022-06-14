@@ -7,13 +7,13 @@ public class Doctor {
     private String amka;
     private String name;
     private String surname;
-    private List<Timeslot> timeslots;
+    private List<Timeslot> assignedTimeslots;
 
     public Doctor(String amka, String name, String surname, List<Timeslot> timeslots) {
         this.amka = amka;
         this.name = name;
         this.surname = surname;
-        this.timeslots = timeslots;
+        this.assignedTimeslots = timeslots;
     }
 
     public String getAmka() {
@@ -41,16 +41,16 @@ public class Doctor {
     }
 
     public List<Timeslot> getTimeslots() {
-        return timeslots;
+        return assignedTimeslots;
     }
 
     public void setTimeslots(List<Timeslot> timeslots) {
-        this.timeslots = timeslots;
+        this.assignedTimeslots = timeslots;
     }
 
     public void assignTimeslot(Timeslot timeslot){
-        if(timeslots.size()<5){
-            timeslots.add(timeslot);
+        if(assignedTimeslots.size()<5){
+            assignedTimeslots.add(timeslot);
         }
         else System.out.println("The doctor has already reached the max capacity of assigned timeslots!");
     }

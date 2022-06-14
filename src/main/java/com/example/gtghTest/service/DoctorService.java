@@ -40,7 +40,7 @@ public class DoctorService {
             t = vaccinationCenterService.getTimeslot(vacCenter);
 
             if (t != null) {
-                if (vaccinationCenterService.assignDoctorToCenter(getDoctor(amka))) {
+                if (vaccinationCenterService.assignDoctorToCenter(getDoctor(amka),vacCenter)) {
                     // checks to see if the doctor we are trying to assign to the center's timeslot is assigned to that center
                     // if not and there's space add them, else he is not assigned
                     getDoctor(amka).assignTimeslot(t); // assign the free timeslot to the doctor

@@ -1,12 +1,10 @@
 package com.example.gtghTest.controller;
 
+import com.example.gtghTest.model.Timeslot;
 import com.example.gtghTest.model.Vaccination;
 import com.example.gtghTest.service.VaccinationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,11 +15,18 @@ public class VaccinationController {
     private VaccinationService vaccinationService;
 
     @PostMapping(path = "/vaccination")
-    public String doVaccination(@RequestBody Vaccination vaccination){
-        vaccinationService.getVaccinated(vaccination);
+    public String doVaccination(@RequestBody Timeslot timeslot,
+                                @RequestParam (value = "amka") String amka,
+                                @RequestParam (value = "expDate") String expDate){
+        vaccinationService.getVaccinated(timeslot, amka, expDate);
         return "Successfully vaccinated!";
     }
 
     @GetMapping(path = "/vaccination/all")
     public List<Vaccination> getSuccessfulVaccinations(){return vaccinationService.getVaccinationsList();}
+
+    @GetMapping(path = "/vaccination/status")
+    public Vaccination getStatus(@RequestParam(value = "amka") String amka){
+        return vaccinationService.getStatus(amka);
+    }
 }
