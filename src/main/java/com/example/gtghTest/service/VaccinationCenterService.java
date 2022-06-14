@@ -103,5 +103,5 @@ public class VaccinationCenterService {
 
     public List<Timeslot> getAllTimeslots(String code) { // Shows the free timeslots of the center whose code we insert as a value
         return getVaccinationCenterByCode(code).getTimeslots();
-    }
+    } //TODO 2: THIS ONE (print in console, and save in a file named vaccination-results.txt)
 }
