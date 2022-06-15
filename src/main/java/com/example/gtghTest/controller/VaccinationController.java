@@ -24,7 +24,7 @@ public class VaccinationController {
     }
 
     @GetMapping(path = "/vaccination/all")
-    public List<Vaccination> getSuccessfulVaccinations(){return vaccinationService.getVaccinationsList();}
+    public List<Vaccination> getSuccessfulVaccinations() throws IOException {return vaccinationService.getVaccinationsList();}
 
     @GetMapping(path = "/vaccination/status")
     public Vaccination getStatus(@RequestParam(value = "amka") String amka){

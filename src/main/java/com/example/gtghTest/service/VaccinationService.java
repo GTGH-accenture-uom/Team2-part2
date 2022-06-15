@@ -38,12 +38,18 @@ public class VaccinationService {
             else
                 System.out.println("This person can't get vaccinated, because they don't have an appointment"); // if not then don't
         }
-
     }
 
-    public List<Vaccination> getVaccinationsList() {
+    public List<Vaccination> getVaccinationsList() throws IOException {
+        for(Vaccination vaccination: successfulVaccinations){
+            String output = "Doctor: " +vaccination.getDoctor().getSurname() + ", doctor amka: " + vaccination.getDoctor().getAmka() + ", Insured: " +
+                    vaccination.getInsured().getName() + ", Surname: " + vaccination.getInsured().getSurname() + ", Vaccination date: "  + vaccination.getVaccinationDate();
+            System.out.println("Vaccinations for each doctor: ");
+            System.out.println(output);
+            SaveService.saveTofile("vaccination-results.txt", output, true);
+        }
         return successfulVaccinations;
-    } //TODO 3: (print in console, and save in a file named vaccination-results.txt)
+    }
 
     public Vaccination getStatus(String amka) {
         for (Vaccination vaccination : successfulVaccinations) {
