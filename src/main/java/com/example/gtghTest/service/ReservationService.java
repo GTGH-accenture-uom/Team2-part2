@@ -79,7 +79,7 @@ public class ReservationService {
 
 
 
-        return theList;
+        return theList; //TODO 4: print to console and save to file
     }
 
 

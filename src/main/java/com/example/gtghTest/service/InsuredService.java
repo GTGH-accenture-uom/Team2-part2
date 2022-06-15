@@ -15,7 +15,7 @@ public class InsuredService {
         insuredList.add(insured);
     }
 
-    public Insured getInsuredByName(String name){ // Gets a single Insured from the list
+    public Insured getInsuredByName(String name){ // Gets a single Insured from the list by name
         for (Insured insured: insuredList){
             if(insured.getName().equals(name)){
                 return insured;
@@ -24,7 +24,7 @@ public class InsuredService {
         return null;
     }
 
-    public Insured getInsuredByAmka(String amka){ // Gets a single Insured from the list
+    public Insured getInsuredByAmka(String amka){ // Gets a single Insured from the list by amka
         for (Insured insured: insuredList){
             if(insured.getAmka().equals(amka)){
                 return insured;

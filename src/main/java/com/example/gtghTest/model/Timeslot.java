@@ -1,7 +1,5 @@
 package com.example.gtghTest.model;
 
-import java.time.LocalDateTime;
-
 public class Timeslot {
 
     private int day;
