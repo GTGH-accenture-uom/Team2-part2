@@ -4,6 +4,7 @@ import com.example.gtghTest.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,18 +62,29 @@ public class ReservationService {
         }
     }
 
-    public List<Insured> returnSpecificNumberOfInsured() {
+    public List<Insured> returnSpecificNumberOfInsured() throws IOException {
         List<Insured> theList = new ArrayList<>();
         for (Map.Entry<Reservation, String> set :
                 reservations.entrySet()) {
             if (!(insuredService.getEveryInsured().contains(set.getKey().getInsured()))) {
                 theList.add(set.getKey().getInsured());
+                String output = "Name: " + set.getKey().getInsured().getName() + ", Surname: " +set.getKey().getInsured().getSurname() + ", AFM: " + set.getKey().getInsured().getAfm() +
+                        ", AMKA: "+ set.getKey().getInsured().getAmka() + ", Birthdate : " + set.getKey().getInsured().getBirthdate() + ", email: " +set.getKey().getInsured().getEmail();
+                System.out.println("Vaccinated people over the age of 60: ");
+                System.out.println(output);
+                SaveService.saveTofile("vaccination-results.txt", output, true);
             }
         }
         theList.removeIf(insured -> !(insured.getBirthdate().getYear() <= 1962));
 
-        return theList;
+
+
+        return theList; //TODO print to console and save the file
     }
+
+
+
+
 
     public String makeAppointment(String amka, Timeslot timeslot) {
         Reservation appointment = new Reservation(insuredService.getInsuredByAmka(amka), timeslot);

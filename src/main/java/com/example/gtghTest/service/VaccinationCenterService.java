@@ -38,7 +38,7 @@ public class VaccinationCenterService {
 
     public List<VaccinationCenter> getAllCenters() {
         return vaccinationCenters;
-    }
+    } //TODO endpoint
 
     public void addTimeslotToVacCenter(String code, String localDateTime) {
         Timeslot t = null;

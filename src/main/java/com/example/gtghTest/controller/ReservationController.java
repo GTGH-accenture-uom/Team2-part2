@@ -9,6 +9,7 @@ import com.example.gtghTest.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class ReservationController {
     }
 
     @GetMapping(path = "/get-insured-old-people-with-no-reservation")
-    public List<Insured> getOldPeopleList(){ return reservationService.returnSpecificNumberOfInsured();}
+    public List<Insured> getOldPeopleList() throws IOException { return reservationService.returnSpecificNumberOfInsured();}
 
     @PostMapping(path = "/create-appointment")
     public String makeAppointment(@RequestParam (value = "amka") String amka,
