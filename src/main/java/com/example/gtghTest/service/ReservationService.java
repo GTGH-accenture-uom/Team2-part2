@@ -22,18 +22,24 @@ public class ReservationService {
 
     private HashMap<Reservation, String> reservations = new HashMap<>();
 
-    public HashMap<Reservation, String> getEveryAppointment() { // Gets every appointment on the list
+    public HashMap<Reservation, String> getEveryAppointment() throws IOException { // Gets every appointment on the list
+        for (Map.Entry<Reservation, String> set : reservations.entrySet()) {
+            String output = "Name: " + set.getKey().getInsured().getName() + ", Surname: " + set.getKey().getInsured().getSurname() + ", AMKA: " + set.getKey().getInsured().getAmka() +
+                    ", Timeslot: " + set.getKey().getTimeslot().toString();
+            System.out.println("Upcoming Appointments per Vaccination Center: ");
+            System.out.println(output);
+            SaveService.saveTofile("vaccination-results.txt", output, true);
+        }
         return reservations;
-    } //TODO 1: THIS ONE (print in console, and save in a file named vaccination-results.txt)
+    }
 
-    public List<Reservation> getDailyAppointments(){
+    public List<Reservation> getDailyAppointments() {
         List<Reservation> theList = new ArrayList<>();
 
-        for(Map.Entry<Reservation, String> set : reservations.entrySet()){
-            if(set.getKey().getTimeslot().getYear() == LocalDateTime.now().getYear()
+        for (Map.Entry<Reservation, String> set : reservations.entrySet()) {
+            if (set.getKey().getTimeslot().getYear() == LocalDateTime.now().getYear()
                     && set.getKey().getTimeslot().getMonth() == LocalDateTime.now().getMonthValue()
-                    && set.getKey().getTimeslot().getDay() == LocalDateTime.now().getDayOfMonth())
-            {
+                    && set.getKey().getTimeslot().getDay() == LocalDateTime.now().getDayOfMonth()) {
                 theList.add(set.getKey());
             }
         }
@@ -68,8 +74,8 @@ public class ReservationService {
                 reservations.entrySet()) {
             if (!(insuredService.getEveryInsured().contains(set.getKey().getInsured()))) {
                 theList.add(set.getKey().getInsured());
-                String output = "Name: " + set.getKey().getInsured().getName() + ", Surname: " +set.getKey().getInsured().getSurname() + ", AFM: " + set.getKey().getInsured().getAfm() +
-                        ", AMKA: "+ set.getKey().getInsured().getAmka() + ", Birthdate : " + set.getKey().getInsured().getBirthdate() + ", email: " +set.getKey().getInsured().getEmail();
+                String output = "Name: " + set.getKey().getInsured().getName() + ", Surname: " + set.getKey().getInsured().getSurname() + ", AFM: " + set.getKey().getInsured().getAfm() +
+                        ", AMKA: " + set.getKey().getInsured().getAmka() + ", Birthdate : " + set.getKey().getInsured().getBirthdate() + ", email: " + set.getKey().getInsured().getEmail();
                 System.out.println("Vaccinated people over the age of 60: ");
                 System.out.println(output);
                 SaveService.saveTofile("vaccination-results.txt", output, true);
@@ -77,14 +83,8 @@ public class ReservationService {
         }
         theList.removeIf(insured -> !(insured.getBirthdate().getYear() <= 1962));
 
-
-
-        return theList; //TODO 4: print to console and save to file
+        return theList;
     }
-
-
-
-
 
     public String makeAppointment(String amka, Timeslot timeslot) {
         Reservation appointment = new Reservation(insuredService.getInsuredByAmka(amka), timeslot);

@@ -86,4 +86,16 @@ public class Timeslot {
     public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
     }
+
+    @Override
+    public String toString() {
+        return "Timeslot: " +
+                "day=" + day +
+                ", month=" + month +
+                ", year=" + year +
+                ", hour=" + hour +
+                ", minutes=" + minutes +
+                ", startMinute=" + startMinute +
+                ", endMinute=" + endMinute;
+    }
 }

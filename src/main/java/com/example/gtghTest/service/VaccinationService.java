@@ -4,6 +4,7 @@ import com.example.gtghTest.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class VaccinationService {
 
     private List<Vaccination> successfulVaccinations = new ArrayList<>();
 
-    public void getVaccinated(Timeslot timeslot, String amka, String expDate) {
+    public void getVaccinated(Timeslot timeslot, String amka, String expDate) throws IOException {
         Vaccination vaccination = null;
         Doctor doctor = null;
         for(Map.Entry<Doctor, VaccinationCenter> docSet : centerService.getAssignedDoctors().entrySet()){

@@ -6,6 +6,7 @@ import com.example.gtghTest.service.VaccinationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -17,7 +18,7 @@ public class VaccinationController {
     @PostMapping(path = "/vaccination")
     public String doVaccination(@RequestBody Timeslot timeslot,
                                 @RequestParam (value = "amka") String amka,
-                                @RequestParam (value = "expDate") String expDate){
+                                @RequestParam (value = "expDate") String expDate) throws IOException {
         vaccinationService.getVaccinated(timeslot, amka, expDate);
         return "Successfully vaccinated!";
     }
