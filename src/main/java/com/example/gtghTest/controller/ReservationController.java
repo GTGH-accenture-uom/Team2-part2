@@ -41,10 +41,15 @@ public class ReservationController {
         return reservationService.makeAppointment(amka, timeslot);
     }
 
-    @PostMapping(path = "/update-appointment")
+    @PutMapping(path = "/update-appointment")
     public String changeAppointment(@RequestParam (value = "amka") String amka,
                                     @RequestBody Timeslot timeslot){
         int i = 0;
         return reservationService.changeAppointment(amka,timeslot,i);
+    }
+
+    @GetMapping(path = "/reservation/daily")
+    public List<Reservation> returnDailyReservation() {
+        return reservationService.getDailyAppointments();
     }
 }
