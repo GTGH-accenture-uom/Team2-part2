@@ -18,7 +18,7 @@ public class VaccinationCenterService {
     private TimeslotService timeslotService;
 
     private List<VaccinationCenter> vaccinationCenters = new ArrayList<>();
-    private HashMap<Doctor,VaccinationCenter> assignedDoctors = new HashMap<>();
+    private HashMap<Doctor, VaccinationCenter> assignedDoctors = new HashMap<>();
 
     public void addVaccinationCenter(VaccinationCenter vaccinationCenter) {
         vaccinationCenter.getTimeslots().clear(); // Empties the timeslot list first
@@ -54,26 +54,10 @@ public class VaccinationCenterService {
         }
     }
 
-    public boolean assignDoctorToCenter(Doctor doctor, VaccinationCenter vacCenter) {
-        if (!assignedDoctors.isEmpty()) {
-            for(Map.Entry<Doctor, VaccinationCenter> set : assignedDoctors.entrySet()) {
-                if (assignedDoctors.size()<4 && !(set.getKey().equals(doctor))) {
-                    assignedDoctors.put(doctor,vacCenter);
-                    return true;
-                } else if (assignedDoctors.size()<4 && set.getKey().equals(doctor)) {
-                    if(set.getValue().equals(vacCenter)) System.out.println("This doctor is already assigned to this center");
-                    else System.out.println("This doctor is already assigned to another center");
-                    return true;
-                } else
-                    System.out.println("All the vaccination centers are full");
-                return false;
-            }
-        } else {
-            assignedDoctors.put(doctor, vacCenter);
-            return true;
-        }
-        return false;
+    public void assignDoctorToCenter(Doctor doctor, VaccinationCenter vacCenter) {
+        assignedDoctors.put(doctor,vacCenter);
     }
+
 
     public void addTimeslot(Timeslot t, VaccinationCenter vacCenter) {
         if (vacCenter.getTimeslots().size() < 10) {// checks the amount of timeslots in the list || if more than 10 doesn't add more
@@ -82,14 +66,16 @@ public class VaccinationCenterService {
         } else System.out.println("Unable to add more than 10 timeslots!");
     }
 
-    public Timeslot getTimeslot(VaccinationCenter vacCenter) {
+    public List<Timeslot> getTimeslots(VaccinationCenter vacCenter) {
+        int i=0;
+        List<Timeslot> timeslots = new ArrayList<>();
         for (Timeslot timeslot : vacCenter.getTimeslots()) {
-            if (timeslot.getDoctor() == null) { // checks if any of the timeslots have an assigned doctor
-                return timeslot; // returns unassigned timeslot
+            if (timeslot.getDoctor() == null && i<5) { // checks if any of the timeslots have an assigned doctor
+                timeslots.add(timeslot);
+                i++;
             }
         }
-        System.out.println("There are no timeslots available!");
-        return null;
+        return timeslots;
     }
 
     public void importTimeslotList(List<Timeslot> timeslots, String code) { // gets a list of timeslots
@@ -101,6 +87,8 @@ public class VaccinationCenterService {
         }
     }
 
-    public HashMap<Doctor, VaccinationCenter> getAssignedDoctors(){return assignedDoctors;}
+    public HashMap<Doctor, VaccinationCenter> getAssignedDoctors() {
+        return assignedDoctors;
+    }
 
 }

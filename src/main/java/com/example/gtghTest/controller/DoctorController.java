@@ -1,9 +1,12 @@
 package com.example.gtghTest.controller;
 
 import com.example.gtghTest.model.Doctor;
+import com.example.gtghTest.model.Timeslot;
 import com.example.gtghTest.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class DoctorController {
@@ -22,11 +25,16 @@ public class DoctorController {
         return doctorService.getDoctor(amka);
     }
 
+    @GetMapping(path = "/doctor/timeslots")
+    public List<Timeslot> getDoctorTimeslots(@RequestParam(value = "amka") String amka){
+        return doctorService.getTimeslots(amka);
+    }
+
     @PostMapping(path = "/doctor/assign-timeslot")
-    public String assignTimeslotToDoctor(@RequestParam(value = "amka") String amka)
-    {
-        doctorService.assignTimeslotsToDoctor(amka);
-        return "Timeslot assigned to the doctor";
+    public String assignTimeslotsToDoctor(@RequestParam(value = "amka") String amka,
+                                          @RequestParam(value = "code") String code) {
+        doctorService.assignTimeslotsToDoctor(amka,code);
+        return "Timeslots assigned to the doctor";
     }
 
 }

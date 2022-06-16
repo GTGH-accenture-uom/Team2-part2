@@ -22,15 +22,18 @@ public class ReservationService {
 
     private HashMap<Reservation, String> reservations = new HashMap<>();
 
-    public HashMap<Reservation, String> getEveryAppointment() throws IOException { // Gets every appointment on the list
-        for (Map.Entry<Reservation, String> set : reservations.entrySet()) {
+    public HashMap<Reservation, String> getEveryAppointment(){ // Gets every appointment on the list
+        return reservations;
+    }
+
+    public void printAndSaveEveryAppointment(HashMap<Reservation, String> appointments) throws IOException {
+        for (Map.Entry<Reservation, String> set : appointments.entrySet()) {
             String output = "Name: " + set.getKey().getInsured().getName() + ", Surname: " + set.getKey().getInsured().getSurname() + ", AMKA: " + set.getKey().getInsured().getAmka() +
                     ", Timeslot: " + set.getKey().getTimeslot().toString();
             System.out.println("Upcoming Appointments per Vaccination Center: ");
             System.out.println(output);
             SaveService.saveTofile("vaccination-results.txt", output, true);
         }
-        return reservations;
     }
 
     public List<Reservation> getDailyAppointments() {
@@ -47,8 +50,7 @@ public class ReservationService {
     }
 
     public void reserveAnAppointment(Reservation appointment, String code) {
-        for (Map.Entry<Reservation, String> set :
-                reservations.entrySet()) { // if appointments list is not empty
+        for (Map.Entry<Reservation, String> set : reservations.entrySet()) { // if appointments list is not empty
             if (!(set.getKey().getInsured().equals(appointment.getInsured()))) {
                 // checks the appointments list to see if the insured is already on there
                 if (!(set.getKey().getTimeslot().equals(appointment.getTimeslot()))) {
@@ -87,16 +89,34 @@ public class ReservationService {
     }
 
     public String makeAppointment(String amka, Timeslot timeslot) {
-        Reservation appointment = new Reservation(insuredService.getInsuredByAmka(amka), timeslot);
+        Reservation appointment;
 
         for (Map.Entry<Doctor, VaccinationCenter> set : centerService.getAssignedDoctors().entrySet()) {
-            if (set.getKey().getTimeslots().contains(timeslot)) {
-                reservations.put(appointment, set.getValue().getCode());
-                System.out.println("Appointment created and added to the list");
-                return "Successfully created appointment";
-            } else if (set.getValue().getTimeslots().contains(timeslot)) {
-                System.out.println("Reservation can't be made because the timeslot is not assigned to a doctor");
-                return "Couldn't add appointment to the list";
+            for (Timeslot t : set.getKey().getTimeslots()) {
+                if (t.getYear()==timeslot.getYear() && t.getMonth()==timeslot.getMonth() && t.getDay()==timeslot.getDay()
+                    && t.getHour()==timeslot.getHour() && t.getMinutes()==timeslot.getMinutes()) {
+                    if(reservations.isEmpty()){
+                        appointment = new Reservation(insuredService.getInsuredByAmka(amka), t);
+                        reservations.put(appointment,set.getValue().getCode());
+                        System.out.println("Appointment created and added to the list");
+                        return "Successfully created appointment!";
+                    }
+                    for(Map.Entry<Reservation, String> otherSet : reservations.entrySet()){
+                        if(!otherSet.getKey().getTimeslot().equals(t)){
+                            appointment = new Reservation(insuredService.getInsuredByAmka(amka),t);
+                            reservations.put(appointment,set.getValue().getCode());
+                            System.out.println("Appointment created and added to the list");
+                            return "Successfully created appointment!";
+                        }
+                        else{
+                            System.out.println("Appointment not created");
+                            return "Can't create appointment. The timeslot is already reserved for someone else.";
+                        }
+                    }
+                } else if (set.getValue().getTimeslots().contains(t)) {
+                    System.out.println("Reservation can't be made because the timeslot is not assigned to a doctor");
+                    return "Couldn't add appointment to the list";
+                }
             }
         }
         return "Couldn't create an appointment";

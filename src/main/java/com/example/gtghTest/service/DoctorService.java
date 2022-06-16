@@ -33,21 +33,17 @@ public class DoctorService {
         return null;
     }
 
-    public void assignTimeslotsToDoctor(String amka) {
-        Timeslot t;
-
-        for (VaccinationCenter vacCenter : vaccinationCenterService.getAllCenters()) { // searches every center for an empty timeslot
-            t = vaccinationCenterService.getTimeslot(vacCenter);
-
-            if (t != null) {
-                if (vaccinationCenterService.assignDoctorToCenter(getDoctor(amka),vacCenter)) {
-                    // checks to see if the doctor we are trying to assign to the center's timeslot is assigned to that center
-                    // if not and there's space add them, else he is not assigned
-                    getDoctor(amka).assignTimeslot(t); // assign the free timeslot to the doctor
-                    if (getDoctor(amka).getTimeslots().contains(t)) vacCenter.getTimeslots().remove(t); // then remove it from the list of the vaccination Center
-                } else System.out.println("Not able to assign this timeslot to the Doctor!");
-            }
+    public void assignTimeslotsToDoctor(String amka, String code) {
+        if (!vaccinationCenterService.getAssignedDoctors().containsKey(getDoctor(amka))) {
+            vaccinationCenterService.assignDoctorToCenter(getDoctor(amka), vaccinationCenterService.getVaccinationCenterByCode(code));
+            getDoctor(amka).getTimeslots().addAll(vaccinationCenterService.getTimeslots(vaccinationCenterService.getVaccinationCenterByCode(code))); // assign 5 free timeslots to the doctor
+            vaccinationCenterService.getVaccinationCenterByCode(code).getTimeslots().removeAll(vaccinationCenterService.getTimeslots(vaccinationCenterService.getVaccinationCenterByCode(code)));// then remove them from the list of the vaccination Center
+            System.out.println("Successfully added timeslots to doctor!");
         }
+
     }
 
+    public List<Timeslot> getTimeslots(String amka) {
+        return getDoctor(amka).getTimeslots();
+    }
 }

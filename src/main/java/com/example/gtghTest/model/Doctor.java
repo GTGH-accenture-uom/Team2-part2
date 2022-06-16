@@ -48,10 +48,4 @@ public class Doctor {
         this.assignedTimeslots = timeslots;
     }
 
-    public void assignTimeslot(Timeslot timeslot){
-        if(assignedTimeslots.size()<5){
-            assignedTimeslots.add(timeslot);
-        }
-        else System.out.println("The doctor has already reached the max capacity of assigned timeslots!");
-    }
 }

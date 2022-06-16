@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ReservationController {
@@ -28,6 +29,7 @@ public class ReservationController {
 
     @GetMapping(path = "/reservation/all") // Gets every Reservation that's on the list
     public HashMap<Reservation, String> getEveryReservation() throws IOException {
+        reservationService.printAndSaveEveryAppointment(reservationService.getEveryAppointment());
         return reservationService.getEveryAppointment();
     }
 

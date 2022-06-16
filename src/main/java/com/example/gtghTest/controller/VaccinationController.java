@@ -18,7 +18,7 @@ public class VaccinationController {
     @PostMapping(path = "/vaccination")
     public String doVaccination(@RequestBody Timeslot timeslot,
                                 @RequestParam (value = "amka") String amka,
-                                @RequestParam (value = "expDate") String expDate) throws IOException {
+                                @RequestParam (value = "expDate") String expDate){
         vaccinationService.getVaccinated(timeslot, amka, expDate);
         return "Successfully vaccinated!";
     }
