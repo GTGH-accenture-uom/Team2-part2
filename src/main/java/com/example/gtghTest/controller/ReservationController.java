@@ -53,7 +53,7 @@ public class ReservationController {
         return reservationService.getDailyAppointments();
     }
 
-    @GetMapping(path = "/vaccination-center/all-timeslots")
+    @GetMapping(path = "/reservation/all-timeslots")
     public List<Timeslot> getAllFreeTimeslots() throws IOException {
         reservationService.printAndSaveAllTimeslots(reservationService.getAllTimeslots());
         return reservationService.getAllTimeslots();
