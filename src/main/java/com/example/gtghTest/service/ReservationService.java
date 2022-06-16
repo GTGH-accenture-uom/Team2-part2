@@ -33,7 +33,6 @@ public class ReservationService {
             if(!theVaccinatedInsuredList.contains(set.getKey().getInsured()))
                 ourList.put(set.getKey(),set.getValue());
         }
-
         return ourList;
     }
 
@@ -176,7 +175,7 @@ public class ReservationService {
     public String search4Timeslot(String year, String month, String day) {
         // Searches the timeslot given in the free timeslots' list by day
         for (Timeslot t : getAllTimeslots()) {
-            if (t.getYear() == Integer.getInteger(year) && t.getMonth() == Integer.getInteger(month) && t.getDay() == Integer.getInteger(day)) {
+            if (t.getYear() == Integer.parseInt(year) && t.getMonth() == Integer.parseInt(month) && t.getDay() == Integer.parseInt(day)) {
                 System.out.println("Timeslots found");
                 return "Available timeslots found.";
             }
@@ -188,7 +187,7 @@ public class ReservationService {
     public String search4Timeslot(String year, String month) {
         // Searches the timeslot given in the free timeslots' list by month
         for (Timeslot t : getAllTimeslots()) {
-            if (t.getYear() == Integer.getInteger(year) && t.getMonth() == Integer.getInteger(month)) {
+            if (t.getYear() == Integer.parseInt(year) && t.getMonth() == Integer.parseInt(month)) {
                 System.out.println("Timeslots found");
                 return "Available timeslots found.";
             }

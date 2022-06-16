@@ -61,7 +61,7 @@ public class ReservationController {
         return reservationService.getAllTimeslots();
     }
 
-    @PostMapping(path = "/search-for-free-timeslot")
+    @GetMapping(path = "/search-for-free-timeslot")
     public String search4Timeslot(@RequestParam(value = "day") String day,
                                   @RequestParam(value = "month") String month,
                                   @RequestParam(value = "year") String year){
