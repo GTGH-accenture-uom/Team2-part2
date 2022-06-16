@@ -29,8 +29,8 @@ public class ReservationController {
 
     @GetMapping(path = "/reservation/all") // Gets every Reservation that's on the list
     public HashMap<Reservation, String> getEveryReservation() throws IOException {
-        reservationService.printAndSaveEveryAppointment(reservationService.getEveryAppointment());
-        return reservationService.getEveryAppointment();
+        reservationService.printAndSaveEveryAppointment(reservationService.finalGetEveryAppointment());
+        return reservationService.finalGetEveryAppointment();
     }
 
     @GetMapping(path = "/get-insured-old-people-with-no-reservation")

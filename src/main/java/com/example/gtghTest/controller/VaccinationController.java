@@ -20,6 +20,7 @@ public class VaccinationController {
                                 @RequestParam (value = "amka") String amka,
                                 @RequestParam (value = "expDate") String expDate){
         vaccinationService.getVaccinated(timeslot, amka, expDate);
+        vaccinationService.getVaccinatedInsured();
         return "Successfully vaccinated!";
     }
 

@@ -21,9 +21,20 @@ public class ReservationService {
     private VaccinationCenterService centerService;
 
     private HashMap<Reservation, String> reservations = new HashMap<>();
+    List<Insured> theVaccinatedInsuredList = new ArrayList<>();
 
     public HashMap<Reservation, String> getEveryAppointment(){ // Gets every appointment on the list
         return reservations;
+    }
+
+    public HashMap<Reservation, String> finalGetEveryAppointment(){
+        HashMap<Reservation,String> ourList = new HashMap<>();
+        for(Map.Entry<Reservation,String> set : reservations.entrySet()){
+            if(!theVaccinatedInsuredList.contains(set.getKey().getInsured()))
+                ourList.put(set.getKey(),set.getValue());
+        }
+
+        return ourList;
     }
 
     public void printAndSaveEveryAppointment(HashMap<Reservation, String> appointments) throws IOException {
@@ -184,5 +195,9 @@ public class ReservationService {
         }
         System.out.println("No timeslots found");
         return "No available slots found on this date.";
+    }
+
+    public void getVaccinatedInsuredList(List<Insured> vaccinatedInsuredList){
+        theVaccinatedInsuredList = vaccinatedInsuredList;
     }
 }

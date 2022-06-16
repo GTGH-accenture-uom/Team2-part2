@@ -19,10 +19,10 @@ public class VaccinationService {
     private VaccinationCenterService centerService;
 
     private List<Vaccination> successfulVaccinations = new ArrayList<>();
-    private static Timeslot t;
 
-    public void getVaccinated(Timeslot timeslot, String amka, String expDate) {
+     public void getVaccinated(Timeslot timeslot, String amka, String expDate) {
         Vaccination vaccination;
+        Timeslot t = null;
         Doctor doctor = null;
 
         List<Timeslot> docTimeslots;
@@ -47,13 +47,15 @@ public class VaccinationService {
             } else
                 System.out.println("This person can't get vaccinated, because they don't have an appointment"); // if not then don't
         }
+
     }
 
-    public void subtractReservation() {
-        for (Map.Entry<Reservation, String> set : reservationService.getEveryAppointment().entrySet()) {
-            if (set.getKey().getTimeslot().equals(t))
-                reservationService.getEveryAppointment().remove(set.getKey());
-        }
+    public void getVaccinatedInsured(){
+         List<Insured> theList = new ArrayList<>();
+         for(Vaccination vaccination : successfulVaccinations){
+             theList.add(vaccination.getInsured());
+         }
+         reservationService.getVaccinatedInsuredList(theList);
     }
 
     public List<Vaccination> getVaccinationsList() throws IOException {
