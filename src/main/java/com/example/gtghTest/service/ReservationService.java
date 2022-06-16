@@ -4,8 +4,11 @@ import com.example.gtghTest.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.DateFormatter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,13 +49,17 @@ public class ReservationService {
         }
     }
 
-    public List<Reservation> getDailyAppointments() {
+    public List<Reservation> getSpecificDateAppointments(String date) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate dateTime = LocalDate.parse(date, formatter);
+
         List<Reservation> theList = new ArrayList<>();
 
         for (Map.Entry<Reservation, String> set : reservations.entrySet()) {
-            if (set.getKey().getTimeslot().getYear() == LocalDateTime.now().getYear()
-                    && set.getKey().getTimeslot().getMonth() == LocalDateTime.now().getMonthValue()
-                    && set.getKey().getTimeslot().getDay() == LocalDateTime.now().getDayOfMonth()) {
+            if (set.getKey().getTimeslot().getYear() == dateTime.getYear()
+                    && set.getKey().getTimeslot().getMonth() == dateTime.getMonthValue()
+                    && set.getKey().getTimeslot().getDay() == dateTime.getDayOfMonth()) {
                 theList.add(set.getKey());
             }
         }

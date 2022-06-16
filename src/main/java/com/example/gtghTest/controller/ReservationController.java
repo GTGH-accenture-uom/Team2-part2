@@ -50,9 +50,9 @@ public class ReservationController {
         return reservationService.changeAppointment(amka,timeslot,i);
     }
 
-    @GetMapping(path = "/reservation/daily")
-    public List<Reservation> returnDailyReservation() {
-        return reservationService.getDailyAppointments();
+    @GetMapping(path = "/reservation")
+    public List<Reservation> returnDailyReservation(@RequestParam(value = "date") String date) {
+        return reservationService.getSpecificDateAppointments(date);
     }
 
     @GetMapping(path = "/reservation/all-timeslots")
