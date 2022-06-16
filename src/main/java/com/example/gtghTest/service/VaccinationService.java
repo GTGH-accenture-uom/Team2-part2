@@ -59,6 +59,8 @@ public class VaccinationService {
             }
         }
         System.out.println("Can't check status because vaccination is not complete");
-        return null; //TODO: (NICE TO HAVE) could add potential QR check
+        return null;
+
+        //TODO: (NICE TO HAVE) could add potential QR check
     }
 }

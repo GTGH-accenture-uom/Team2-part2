@@ -101,24 +101,6 @@ public class VaccinationCenterService {
         }
     }
 
-    public List<Timeslot> getAllTimeslots(String code) { // Shows the free timeslots of the center whose code we insert as a value
-        return getVaccinationCenterByCode(code).getTimeslots();
-    } //TODO 2: THIS ONE (print in console, and save in a file named vaccination-results.txt)
-
-    public String search4Timeslot(String year, String month, String day) {
-
-        for (VaccinationCenter vacCenter : getAllCenters()){
-            for (Timeslot t : vacCenter.getTimeslots()){
-                if(t.getYear()==Integer.getInteger(year) && t.getMonth()==Integer.getInteger(month) && t.getDay()==Integer.getInteger(day)){
-                    System.out.println("Timeslots found"); // TODO A: NICE TO HAVE (OPTIONAL)
-                    return "Available timeslots found.";
-                }
-            }
-        }
-        System.out.println("No timeslots found");
-        return "No available slots found on this date.";
-    }
-
     public HashMap<Doctor, VaccinationCenter> getAssignedDoctors(){return assignedDoctors;}
 
 }

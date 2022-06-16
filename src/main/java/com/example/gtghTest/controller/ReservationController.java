@@ -52,4 +52,18 @@ public class ReservationController {
     public List<Reservation> returnDailyReservation() {
         return reservationService.getDailyAppointments();
     }
+
+    @GetMapping(path = "/vaccination-center/all-timeslots")
+    public List<Timeslot> getAllFreeTimeslots() throws IOException {
+        reservationService.printAndSaveAllTimeslots(reservationService.getAllTimeslots());
+        return reservationService.getAllTimeslots();
+    }
+
+    @PostMapping(path = "/search-for-free-timeslot")
+    public String search4Timeslot(@RequestParam(value = "day") String day,
+                                  @RequestParam(value = "month") String month,
+                                  @RequestParam(value = "year") String year){
+
+        return reservationService.search4Timeslot(year,month,day);
+    }
 }

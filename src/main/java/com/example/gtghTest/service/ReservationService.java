@@ -120,4 +120,49 @@ public class ReservationService {
         }
         return "You can no longer change your appointment.";
     }
+
+    public List<Timeslot> getAllTimeslots() { // Shows the free timeslots of every vaccination center
+        List<Timeslot> freeTimeslots = new ArrayList<>();
+
+        for (Map.Entry<Doctor, VaccinationCenter> set : centerService.getAssignedDoctors().entrySet()) {// Search Doctors' list for assigned timeslots
+            freeTimeslots.addAll(set.getKey().getTimeslots());
+            for (Map.Entry<Reservation, String> set2 : reservations.entrySet()) { // Search the reservation list for occupied timeslots
+                if (freeTimeslots.contains(set2.getKey().getTimeslot())) { // Compare the sets to see if there are any free timeslots
+                    freeTimeslots.remove(set2.getKey().getTimeslot()); // If there's an occupied timeslot remove it from the list
+                }
+            }
+        }
+        return freeTimeslots;
+    }
+
+    public void printAndSaveAllTimeslots(List<Timeslot> theList) throws IOException {
+        for (Timeslot t : theList) {
+            System.out.println(t.toString());
+            SaveService.saveTofile("vaccination-results.txt", t.toString(), true);
+        }
+    }
+
+    public String search4Timeslot(String year, String month, String day) {
+        // Searches the timeslot given in the free timeslots' list by day
+        for (Timeslot t : getAllTimeslots()) {
+            if (t.getYear() == Integer.getInteger(year) && t.getMonth() == Integer.getInteger(month) && t.getDay() == Integer.getInteger(day)) {
+                System.out.println("Timeslots found");
+                return "Available timeslots found.";
+            }
+        }
+        System.out.println("No timeslots found");
+        return "No available slots found on this date.";
+    }
+
+    public String search4Timeslot(String year, String month) {
+        // Searches the timeslot given in the free timeslots' list by month
+        for (Timeslot t : getAllTimeslots()) {
+            if (t.getYear() == Integer.getInteger(year) && t.getMonth() == Integer.getInteger(month)) {
+                System.out.println("Timeslots found");
+                return "Available timeslots found.";
+            }
+        }
+        System.out.println("No timeslots found");
+        return "No available slots found on this date.";
+    }
 }
