@@ -98,4 +98,6 @@ public class Timeslot {
                 ", startMinute=" + startMinute +
                 ", endMinute=" + endMinute;
     }
+
+
 }

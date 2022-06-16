@@ -24,7 +24,8 @@ public class ReservationService {
     private VaccinationCenterService centerService;
 
     private HashMap<Reservation, String> reservations = new HashMap<>();
-    List<Insured> theVaccinatedInsuredList = new ArrayList<>();
+    private List<Insured> theVaccinatedInsuredList = new ArrayList<>();
+    private int i = 0;
 
     public HashMap<Reservation, String> getEveryAppointment(){ // Gets every appointment on the list
         return reservations;
@@ -139,8 +140,9 @@ public class ReservationService {
         return "Couldn't create an appointment";
     }
 
-    public String changeAppointment(String amka, Timeslot timeslot, int i) {
+    public String changeAppointment(String amka, Timeslot timeslot) {
         if (i < 2) {
+            i++;
             for (Map.Entry<Reservation, String> set : reservations.entrySet()) {
                 if (set.getKey().getTimeslot().equals(timeslot)) {
                     return "Unable to change the appointment. The timeslot is already reserved for someone else.";

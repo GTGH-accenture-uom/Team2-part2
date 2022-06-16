@@ -46,8 +46,7 @@ public class ReservationController {
     @PutMapping(path = "/update-appointment")
     public String changeAppointment(@RequestParam (value = "amka") String amka,
                                     @RequestBody Timeslot timeslot){
-        int i = 0;
-        return reservationService.changeAppointment(amka,timeslot,i);
+        return reservationService.changeAppointment(amka,timeslot);
     }
 
     @GetMapping(path = "/reservation")
